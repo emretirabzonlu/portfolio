@@ -13,7 +13,7 @@ export default function LoadingScreen() {
     const t = setTimeout(() => {
       setShow(false);
       sessionStorage.setItem("visited", "true");
-    }, 1600);
+    }, 800);
     return () => clearTimeout(t);
   }, []);
 

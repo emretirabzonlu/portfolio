@@ -1,16 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { motion, type Variants } from "framer-motion";
 import { Download, ChevronDown, Mail } from "lucide-react";
 import { heroData } from "@/lib/data";
 import { useReducedMotion } from "@/lib/hooks/useReducedMotion";
 import HeroSceneFallback from "@/components/three/HeroSceneFallback";
-
-const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
-  ssr: false,
-  loading: () => <HeroSceneFallback />,
-});
+import LazyHeroScene from "@/components/three/LazyHeroScene";
 
 // ─── Inline brand icons (lucide-react has no brand icons) ─────────────────────
 
@@ -68,7 +63,7 @@ const instantVariants: Variants = {
 export default function Hero() {
   const prefersReduced = useReducedMotion();
 
-  const Scene = prefersReduced ? HeroSceneFallback : HeroScene;
+  const Scene = prefersReduced ? HeroSceneFallback : LazyHeroScene;
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">

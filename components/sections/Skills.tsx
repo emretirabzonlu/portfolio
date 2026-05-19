@@ -1,18 +1,12 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Server, Code2, Database, Wrench } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import TiltCard from "@/components/ui/TiltCard";
 import Reveal from "@/components/ui/Reveal";
-import HeroSceneFallback from "@/components/three/HeroSceneFallback";
+import LazySkillsOrbit from "@/components/three/LazySkillsOrbit";
 import { skillsData } from "@/lib/data";
 import type { SkillCategory } from "@/lib/data";
-
-const SkillsOrbit = dynamic(() => import("@/components/three/SkillsOrbit"), {
-  ssr: false,
-  loading: () => <HeroSceneFallback />,
-});
 
 // ─── Icon map ─────────────────────────────────────────────────────────────────
 
@@ -40,7 +34,7 @@ export default function Skills() {
           {/* ── Left: 3D Orbit (desktop only) ── */}
           <div className="hidden lg:flex items-center justify-center lg:sticky lg:top-24 self-start">
             <div className="w-75 h-75">
-              <SkillsOrbit />
+              <LazySkillsOrbit />
             </div>
           </div>
 

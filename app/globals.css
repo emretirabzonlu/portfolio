@@ -49,7 +49,6 @@
 }
 
 :root {
-  /* Portfolio dark-first palette */
   --background: #0A0A0F;
   --foreground: #FFFFFF;
   --card: #12121A;
@@ -114,28 +113,23 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* Subtle noise texture for premium feel */
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   }
   html {
     @apply font-sans;
-    /* scroll-behavior is handled by Lenis; set auto to avoid double-smoothing */
     scroll-behavior: auto;
   }
 }
 
-/* Text selection */
 ::selection {
   background: #3B82F6;
   color: #ffffff;
 }
 
-/* Lenis: prevent double-smoothing on anchor jumps */
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
 
-/* Custom cursor: hide native cursor on desktop pointer devices */
 .no-cursor,
 .no-cursor * {
   cursor: none !important;
@@ -153,19 +147,15 @@
   66%       { transform: translate(-30%, 30%) scale(0.9); }
 }
 
-/* ── ProjectMockup skeleton shimmer ─────────────────────────────────────── */
-@keyframes shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position:  200% 0; }
-}
-
-/* ── Gradient mesh blobs ─────────────────────────────────────────────────── */
+/* ── Gradient mesh blobs (desktop only — mobile hidden via JS) ───────────── */
 .blob {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(100px);
+  filter: blur(80px);
   opacity: 0.07;
   will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .blob-1 {
@@ -182,20 +172,6 @@
   animation: blob-move-2 75s ease-in-out infinite;
 }
 
-.blob-3 {
-  width: 450px; height: 450px;
-  background: #06B6D4;
-  bottom: 10%; left: 20%;
-  animation: blob-move-3 55s ease-in-out infinite;
-}
-
-.blob-4 {
-  width: 350px; height: 350px;
-  background: #3B82F6;
-  bottom: -5%; right: 15%;
-  animation: blob-move-4 80s ease-in-out infinite;
-}
-
 @keyframes blob-move-1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
   33%       { transform: translate(80px, 60px) scale(1.1); }
@@ -206,18 +182,6 @@
   0%, 100% { transform: translate(0, 0) scale(1); }
   40%       { transform: translate(-100px, 80px) scale(1.05); }
   70%       { transform: translate(60px, -60px) scale(0.9); }
-}
-
-@keyframes blob-move-3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  30%       { transform: translate(60px, -80px) scale(1.08); }
-  65%       { transform: translate(-80px, 40px) scale(0.95); }
-}
-
-@keyframes blob-move-4 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  45%       { transform: translate(-70px, -50px) scale(1.1); }
-  75%       { transform: translate(90px, 70px) scale(0.92); }
 }
 
 @media (prefers-reduced-motion: reduce) {

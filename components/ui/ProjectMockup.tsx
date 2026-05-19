@@ -7,10 +7,8 @@ interface ProjectMockupProps {
   accent: string;
 }
 
-const shimmerStyle = (accent: string): CSSProperties => ({
-  background: `linear-gradient(90deg, ${accent}15 25%, ${accent}40 50%, ${accent}15 75%)`,
-  backgroundSize: "200% 100%",
-  animation: "shimmer 2.2s ease-in-out infinite",
+const accentBar = (accent: string): CSSProperties => ({
+  background: `${accent}40`,
 });
 
 export default function ProjectMockup({ title, accent }: ProjectMockupProps) {
@@ -26,7 +24,6 @@ export default function ProjectMockup({ title, accent }: ProjectMockupProps) {
         <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57] shrink-0" />
         <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E] shrink-0" />
         <span className="w-2.5 h-2.5 rounded-full bg-[#28C840] shrink-0" />
-        {/* Fake tabs */}
         <div className="flex gap-1 ml-2">
           <div className="px-3 py-0.5 rounded-t-md bg-[#0A0A0F] text-[10px] font-mono text-muted-foreground/70 truncate max-w-22.5">
             {slug}.app
@@ -81,7 +78,7 @@ export default function ProjectMockup({ title, accent }: ProjectMockupProps) {
             {/* Hero strip */}
             <div className="px-3 py-2 flex items-center gap-2 border-b border-white/5">
               <div className="flex-1 flex flex-col gap-1">
-                <div className="h-3 w-3/5 rounded-full" style={shimmerStyle(accent)} />
+                <div className="h-3 w-3/5 rounded-full" style={accentBar(accent)} />
                 <div className="h-2 w-4/5 rounded-full bg-white/10" />
               </div>
               <div className="h-6 w-12 rounded-md shrink-0" style={{ background: `${accent}45` }} />
@@ -95,7 +92,7 @@ export default function ProjectMockup({ title, accent }: ProjectMockupProps) {
                   className="rounded-md border border-white/5 p-1.5 flex flex-col gap-1"
                   style={{ background: `${accent}08` }}
                 >
-                  <div className="h-2.5 w-full rounded" style={shimmerStyle(accent)} />
+                  <div className="h-2.5 w-full rounded" style={accentBar(accent)} />
                   <div className="h-1.5 w-3/4 rounded-full bg-white/10" />
                   <div className="h-1.5 w-1/2 rounded-full bg-white/8" />
                 </div>

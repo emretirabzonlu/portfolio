@@ -10,6 +10,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    const isDesktop =
+      window.innerWidth >= 1024 &&
+      window.matchMedia("(hover: hover)").matches;
+
+    if (!isDesktop) return;
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => 1 - Math.pow(1 - t, 4),
@@ -18,15 +24,11 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
 
     lenisStore.set(lenis);
 
-    // ── Critical: tie Lenis ↔ GSAP ScrollTrigger ──────────────────────────────
-    // ScrollTrigger recalculates on every Lenis scroll tick
     lenis.on("scroll", ScrollTrigger.update);
-    // GSAP ticker drives Lenis RAF (replaces our own requestAnimationFrame)
     const tickerFn = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(tickerFn);
     gsap.ticker.lagSmoothing(0);
 
-    // Intercept anchor clicks for Lenis-aware smooth navigation
     const handleAnchorClick = (e: Event) => {
       const anchor = (e.target as Element).closest<HTMLAnchorElement>("a[href^='#']");
       if (!anchor) return;

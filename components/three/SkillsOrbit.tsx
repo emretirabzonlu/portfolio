@@ -3,11 +3,11 @@
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Line } from "@react-three/drei";
-import * as THREE from "three";
+import { Group, SphereGeometry, MeshStandardMaterial } from "three";
 
 // ─── Shared geometry (created once per module load) ───────────────────────────
-const ORBIT_SPHERE_GEO = new THREE.SphereGeometry(0.04, 8, 8);
-const CENTER_SPHERE_GEO = new THREE.SphereGeometry(0.12, 16, 16);
+const ORBIT_SPHERE_GEO = new SphereGeometry(0.04, 8, 8);
+const CENTER_SPHERE_GEO = new SphereGeometry(0.12, 16, 16);
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -29,12 +29,12 @@ interface OrbitProps {
 }
 
 function OrbitRing({ radius, speed, tilt, count, color }: OrbitProps) {
-  const spinRef = useRef<THREE.Group>(null);
+  const spinRef = useRef<Group>(null);
   const circlePoints = useMemo(() => makeCirclePoints(radius), [radius]);
 
   const mat = useMemo(
     () =>
-      new THREE.MeshStandardMaterial({
+      new MeshStandardMaterial({
         color,
         emissive: color,
         emissiveIntensity: 0.6,
@@ -57,9 +57,7 @@ function OrbitRing({ radius, speed, tilt, count, color }: OrbitProps) {
 
   return (
     <group rotation={tilt}>
-      {/* Visible orbit path */}
       <Line points={circlePoints} color="white" opacity={0.12} transparent lineWidth={0.8} />
-      {/* Orbiting spheres */}
       <group ref={spinRef}>
         {spherePositions.map((pos, i) => (
           <mesh key={i} position={pos} geometry={ORBIT_SPHERE_GEO} material={mat} />
@@ -72,11 +70,11 @@ function OrbitRing({ radius, speed, tilt, count, color }: OrbitProps) {
 // ─── Scene inner (inside Canvas) ─────────────────────────────────────────────
 
 function Scene() {
-  const rootRef = useRef<THREE.Group>(null);
+  const rootRef = useRef<Group>(null);
 
   const centerMat = useMemo(
     () =>
-      new THREE.MeshStandardMaterial({
+      new MeshStandardMaterial({
         color: "#ffffff",
         emissive: "#ffffff",
         emissiveIntensity: 1.2,
@@ -86,9 +84,7 @@ function Scene() {
 
   useFrame((state, delta) => {
     if (!rootRef.current) return;
-    // Slow auto-rotation
     rootRef.current.rotation.y += 0.3 * delta;
-    // Mouse parallax
     rootRef.current.rotation.x +=
       (-state.pointer.y * 0.4 - rootRef.current.rotation.x) * 0.05;
   });
@@ -97,11 +93,7 @@ function Scene() {
     <group ref={rootRef}>
       <ambientLight intensity={0.4} />
       <pointLight position={[0, 0, 0]} intensity={2} color="#3B82F6" distance={4} />
-
-      {/* Central glowing core */}
       <mesh geometry={CENTER_SPHERE_GEO} material={centerMat} />
-
-      {/* Three orbits at different planes */}
       <OrbitRing radius={0.55} speed={0.8}  tilt={[0, 0, 0]}             count={3} color="#3B82F6" />
       <OrbitRing radius={0.85} speed={-0.5} tilt={[Math.PI / 4, 0, 0]}   count={4} color="#60A5FA" />
       <OrbitRing radius={1.15} speed={0.35} tilt={[0, Math.PI / 5, 0]}   count={5} color="#93C5FD" />
@@ -115,8 +107,8 @@ export default function SkillsOrbit() {
   return (
     <Canvas
       camera={{ position: [0, 0, 3], fov: 45 }}
-      dpr={[1, 2]}
-      gl={{ antialias: true, alpha: true }}
+      dpr={[1, 1.5]}
+      gl={{ antialias: false, alpha: true }}
       style={{ background: "transparent" }}
     >
       <Scene />

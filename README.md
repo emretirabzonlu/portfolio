@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# emretirabzonlu.dev
 
-## Getting Started
+Personal portfolio site — Full Stack Developer (.NET + React).
 
-First, run the development server:
+## Tech Stack
+
+| Layer | Tech |
+|-------|------|
+| Framework | Next.js 16.2.6 (App Router, Turbopack) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 |
+| Animation | Framer Motion 12, GSAP 3 + ScrollTrigger |
+| 3D | React Three Fiber 9, Three.js 0.184, @react-three/drei |
+| Smooth Scroll | Lenis 1.3 (GSAP-driven RAF) |
+| UI Primitives | shadcn/ui v4 (base-ui) |
+| Icons | lucide-react |
+| Toasts | sonner |
+
+## Local Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev          # http://localhost:3000 (Turbopack)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build & Start
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy
 
-## Learn More
+Optimized for **Vercel** (zero-config). Push to `main` for automatic deployment.
 
-To learn more about Next.js, take a look at the following resources:
+Environment variables (copy `.env.example` → `.env.local`):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+NEXT_PUBLIC_SITE_URL=https://emretirabzonlu.dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+app/
+  layout.tsx          Root layout — metadata, providers, loading screen
+  page.tsx            Home — all sections in sequence
+  globals.css         Tailwind v4, palette, keyframes
+  opengraph-image.tsx Auto-generated OG image (Next.js Edge)
+  robots.ts           robots.txt (Next.js native)
+  sitemap.ts          sitemap.xml (Next.js native)
+  hi/                 NFC card page — no nav/footer, mobile-first
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+components/
+  layout/             Navbar, Footer
+  sections/           Hero, About, Skills, Projects, Experience, Contact
+  three/              ParticleSphere, HeroScene, SkillsOrbit
+  ui/                 SectionHeading, Reveal, TiltCard, CountUp,
+                      MagneticButton, CustomCursor, LiquidButton,
+                      ProjectMockup, LoadingScreen, GradientMesh, EasterEggs
+  providers/          LenisProvider (GSAP ticker integration)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+lib/
+  data.ts             All content — heroData, aboutData, projectsData, ...
+  lenis-store.ts      Lenis singleton for cross-component access
+  hooks/              useReducedMotion, useMediaQuery
+```
+
+## Lighthouse Scores
+
+| Metric | Score |
+|--------|-------|
+| Performance | — |
+| Accessibility | — |
+| Best Practices | — |
+| SEO | — |
+
+_Run `npx lighthouse https://emretirabzonlu.dev --view` after deploy._

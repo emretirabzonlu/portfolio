@@ -1,7 +1,20 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)"
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)",
+      "Bash(npm install *)",
+      "Bash(npx shadcn@latest init --defaults)",
+      "Bash(npx shadcn@latest add sheet --yes)",
+      "Bash(npx tsc *)",
+      "Bash(node -e \"const l = require\\('lucide-react'\\); console.log\\(Object.keys\\(l\\).filter\\(k => /git|link|linked/i.test\\(k\\)\\).join\\(', '\\)\\)\")",
+      "Bash(npm run *)",
+      "Bash(node -e \"const pkg = require\\('./node_modules/@react-three/fiber/package.json'\\); console.log\\('R3F:', pkg.version\\)\")",
+      "Bash(node -e \"const pkg = require\\('./node_modules/three/package.json'\\); console.log\\('Three:', pkg.version\\)\")",
+      "Bash(node -e \"const pkg = require\\('./node_modules/framer-motion/package.json'\\); console.log\\('Framer:', pkg.version\\)\")",
+      "Bash(node -e \"const l = require\\('lucide-react'\\); ['Server','Code','Code2','Database','Wrench','Layers'].forEach\\(n => console.log\\(n+':', !!l[n]\\)\\)\")",
+      "Bash(node -e \"const pkg = require\\('./node_modules/lenis/package.json'\\); console.log\\('lenis:', pkg.version\\); const main = pkg.exports?.['.']?.import || pkg.main; console.log\\('main:', main\\)\")",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\('sonner:', p.dependencies.sonner\\)\")",
+      "Bash(Test-Path \"c:\\\\Users\\\\emret\\\\OneDrive\\\\Masaüstü\\\\emretirabzonlu.dev\\\\README.md\")"
     ]
   }
 }

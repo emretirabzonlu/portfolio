@@ -125,7 +125,7 @@ export const aboutData: AboutData = {
     { value: 3, suffix: "+", label: "Yıl Deneyim" },
     { value: 10, suffix: "+", label: "Canlı Proje" },
     { value: 2, suffix: "", label: "ERP Sistemi" },
-    { value: 3, suffix: "", label: "Sertifika" },
+    { value: 5, suffix: "", label: "Sertifika" },
   ],
 };
 

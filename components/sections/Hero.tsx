@@ -103,26 +103,41 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            {/* Name with character stagger */}
+            {/* Name — words are wrapped in whitespace-nowrap to prevent mid-word breaks */}
             {prefersReduced ? (
-              <h1 className="text-5xl lg:text-7xl font-bold tracking-tight leading-none">
-                {heroData.name}
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-none">
+                <span className="inline-block whitespace-nowrap">Emre</span>{" "}
+                <span className="inline-block whitespace-nowrap">Tırabzonlu</span>
               </h1>
             ) : (
               <motion.h1
                 variants={nameContainerVariants}
-                className="text-5xl lg:text-7xl font-bold tracking-tight leading-none"
+                className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-none"
                 aria-label={heroData.name}
               >
-                {heroData.name.split("").map((char, i) => (
-                  <motion.span
-                    key={i}
-                    variants={charVariants}
-                    className="inline-block"
-                    aria-hidden="true"
-                  >
-                    {char === " " ? " " : char}
-                  </motion.span>
+                {heroData.name.split(" ").map((word, wi, words) => (
+                  <span key={wi} className="inline-block whitespace-nowrap">
+                    {word.split("").map((char, ci) => (
+                      <motion.span
+                        key={`${wi}-${ci}`}
+                        variants={charVariants}
+                        className="inline-block"
+                        aria-hidden="true"
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                    {wi < words.length - 1 && (
+                      <motion.span
+                        key={`sp-${wi}`}
+                        variants={charVariants}
+                        className="inline-block"
+                        aria-hidden="true"
+                      >
+                        {" "}
+                      </motion.span>
+                    )}
+                  </span>
                 ))}
               </motion.h1>
             )}
@@ -188,7 +203,7 @@ export default function Hero() {
 
           {/* ── Right: 3D scene (desktop only) ── */}
           <div
-            className="hidden lg:block relative aspect-square max-h-[600px] w-full"
+            className="hidden lg:block relative aspect-square max-h-150 w-full"
             style={{
               maskImage: "radial-gradient(ellipse at center, black 55%, transparent 100%)",
               WebkitMaskImage: "radial-gradient(ellipse at center, black 55%, transparent 100%)",

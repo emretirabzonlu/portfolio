@@ -45,16 +45,6 @@ const fadeUp: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
 };
 
-const nameContainerVariants: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.03, delayChildren: 0.2 } },
-};
-
-const charVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } },
-};
-
 const instantVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0 } },
@@ -68,7 +58,7 @@ export default function Hero() {
   const Scene = prefersReduced ? HeroSceneFallback : LazyHeroScene;
 
   return (
-    <section id="hero" className="relative min-h-svh flex items-center overflow-hidden">
+    <section id="hero" className="relative min-h-svh flex items-start lg:items-center overflow-hidden pt-24 lg:pt-0">
 
       {/* ── Mobile: 3D as absolute background ── */}
       <div
@@ -82,7 +72,7 @@ export default function Hero() {
       </div>
 
       {/* ── Main grid ── */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-12 py-24">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-12 pb-12 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
           {/* ── Left: content ── */}
@@ -100,44 +90,14 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            {/* Name — words are wrapped in whitespace-nowrap to prevent mid-word breaks */}
-            {prefersReduced ? (
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-none">
-                <span className="inline-block whitespace-nowrap">Emre</span>{" "}
-                <span className="inline-block whitespace-nowrap">Tırabzonlu</span>
-              </h1>
-            ) : (
-              <motion.h1
-                variants={nameContainerVariants}
-                className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-none"
-                aria-label={heroData.name}
-              >
-                {heroData.name.split(" ").map((word, wi, words) => (
-                  <span key={wi} className="inline-block whitespace-nowrap">
-                    {word.split("").map((char, ci) => (
-                      <motion.span
-                        key={`${wi}-${ci}`}
-                        variants={charVariants}
-                        className="inline-block"
-                        aria-hidden="true"
-                      >
-                        {char}
-                      </motion.span>
-                    ))}
-                    {wi < words.length - 1 && (
-                      <motion.span
-                        key={`sp-${wi}`}
-                        variants={charVariants}
-                        className="inline-block"
-                        aria-hidden="true"
-                      >
-                        {" "}
-                      </motion.span>
-                    )}
-                  </span>
-                ))}
-              </motion.h1>
-            )}
+            {/* Name */}
+            <motion.h1
+              variants={prefersReduced ? instantVariants : fadeUp}
+              className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-none"
+              style={{ wordBreak: "keep-all", hyphens: "none" }}
+            >
+              Emre Tırabzonlu
+            </motion.h1>
 
             {/* Role */}
             <motion.p
@@ -152,7 +112,7 @@ export default function Hero() {
             {/* Tagline */}
             <motion.p
               variants={prefersReduced ? instantVariants : fadeUp}
-              className="text-base lg:text-lg text-muted-foreground max-w-xl leading-relaxed"
+              className="text-base lg:text-lg text-muted-foreground max-w-xl leading-7"
             >
               {heroData.tagline}
             </motion.p>

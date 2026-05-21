@@ -37,14 +37,14 @@ export default function TechTicker() {
       />
 
       <motion.div
-        className="flex gap-8 whitespace-nowrap"
+        className="flex gap-6 lg:gap-8 whitespace-nowrap"
         animate={{ x: ["0%", "-50%"] }}
-        transition={{ x: { duration: 30, ease: "linear", repeat: Infinity } }}
+        transition={{ x: { duration: 40, ease: "linear", repeat: Infinity } }}
       >
         {doubled.map((tech, i) => (
           <span
             key={`${tech}-${i}`}
-            className="text-sm text-muted-foreground font-mono opacity-50 hover:opacity-100 transition-opacity"
+            className="text-xs lg:text-sm text-muted-foreground font-mono opacity-50 hover:opacity-100 transition-opacity"
           >
             {tech}
             <span className="text-accent ml-3"> ·</span>

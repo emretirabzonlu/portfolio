@@ -9,7 +9,7 @@ export default function CurrentStatus() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.4, duration: 0.5, ease: "easeOut" as const }}
-      className="inline-flex flex-col gap-3 p-4 bg-card/50 backdrop-blur-sm border border-border rounded-xl max-w-md"
+      className="inline-flex flex-col gap-2.5 p-3 lg:p-4 bg-card/50 backdrop-blur-sm border border-border rounded-xl max-w-md"
     >
       <div className="flex items-start gap-3">
         <div className="relative mt-1.5 shrink-0">

@@ -1,175 +1,136 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { UserPlus, ExternalLink } from "lucide-react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
-
-const CONTACT = {
-  name: "Emre Tırabzonlu",
-  role: "Full Stack Developer",
-  location: "Kocaeli, Türkiye",
-  email: "emretirabzonlu@gmail.com",
-  phone: "+905423921602",
-  url: "https://emretirabzonlu.dev",
-  github: "https://github.com/emretirabzonlu",
-  linkedin: "https://linkedin.com/in/emretirabzonlu",
-};
-
-function GitHubIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-    </svg>
-  );
-}
-
-function LinkedInIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-    </svg>
-  );
-}
-
-function downloadVCard() {
-  const vcf = [
-    "BEGIN:VCARD",
-    "VERSION:3.0",
-    "FN:Emre Tırabzonlu",
-    "N:Tırabzonlu;Emre;;;",
-    "TITLE:Full Stack Developer",
-    `EMAIL:${CONTACT.email}`,
-    `TEL:${CONTACT.phone}`,
-    `URL:${CONTACT.url}`,
-    "ADR;TYPE=WORK:;;Kocaeli;;;;Türkiye",
-    "END:VCARD",
-  ].join("\r\n");
-
-  const blob = new Blob([vcf], { type: "text/vcard;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "emre-tirabzonlu.vcf";
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" as const } },
-};
+import { HiIntroAnimation } from "./components/HiIntroAnimation";
+import { HiSmartActions } from "./components/HiSmartActions";
+import { HiReactionGame } from "./components/HiReactionGame";
+import { getContextualGreeting } from "./lib/hi-greeting";
 
 export default function HiPage() {
+  const [introComplete, setIntroComplete] = useState(false);
+  const greeting = getContextualGreeting();
+
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center px-6 py-12 bg-[#0A0A0F] overflow-hidden">
+    <main className="relative min-h-svh bg-background text-foreground">
       {/* Decorative background logo */}
       <div
-        className="pointer-events-none select-none absolute inset-0 flex items-center justify-center"
+        className="fixed inset-0 flex items-center justify-center pointer-events-none overflow-hidden"
         aria-hidden="true"
       >
-        <Logo size={600} className="text-white opacity-[0.03]" />
+        <Logo size={600} className="text-white opacity-[0.02]" />
       </div>
 
-      <motion.div
-        className="relative z-10 w-full max-w-sm flex flex-col gap-4"
-        variants={container}
-        initial="hidden"
-        animate="show"
-      >
-        {/* Waving hand */}
-        <motion.div variants={item} className="text-center">
-          <motion.span
-            className="text-6xl inline-block select-none"
-            animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1, ease: "easeInOut" }}
-            style={{ transformOrigin: "70% 70%", display: "inline-block" }}
-            aria-label="Merhaba"
+      {/* Intro */}
+      <AnimatePresence>
+        {!introComplete && (
+          <HiIntroAnimation onComplete={() => setIntroComplete(true)} />
+        )}
+      </AnimatePresence>
+
+      {/* Main content */}
+      <AnimatePresence>
+        {introComplete && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-10 max-w-md mx-auto px-6 py-12 flex flex-col items-center min-h-svh justify-center"
           >
-            👋
-          </motion.span>
-        </motion.div>
+            {/* Greeting header */}
+            <div className="text-center mb-8">
+              <div className="text-5xl mb-3">{greeting.emoji}</div>
+              <h1 className="text-3xl font-bold mb-2">{greeting.message}!</h1>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                {greeting.subtitle}
+              </p>
+            </div>
 
-        {/* Greeting */}
-        <motion.h1
-          variants={item}
-          className="text-4xl font-bold text-center text-white"
-        >
-          Merhaba!
-        </motion.h1>
+            {/* Identity card */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="w-full bg-card border border-border rounded-3xl p-6 mb-6 flex flex-col items-center text-center"
+            >
+              <div className="w-20 h-20 rounded-full bg-background border-2 border-accent flex items-center justify-center mb-4">
+                <Logo size={44} className="text-white" />
+              </div>
+              <div className="text-xl font-bold">Emre Tırabzonlu</div>
+              <div className="text-accent font-medium text-sm mt-1">
+                Full Stack Developer
+              </div>
+              <div className="text-xs text-muted-foreground mt-2">
+                📍 Kocaeli, Türkiye
+              </div>
+            </motion.div>
 
-        {/* Identity card */}
-        <motion.div
-          variants={item}
-          className="rounded-2xl border border-[#1F1F2A] bg-[#12121A] p-6 text-center"
-          style={{
-            background: "linear-gradient(135deg, #12121A 0%, #0F1929 100%)",
-            boxShadow: "0 0 40px rgba(59,130,246,0.08)",
-          }}
-        >
-          {/* Avatar logo */}
-          <div className="w-20 h-20 rounded-full border-2 border-[#3B82F6] bg-[#12121A] flex items-center justify-center mx-auto mb-4">
-            <Logo size={44} className="text-white" />
-          </div>
-          <p className="text-xl font-bold text-white">{CONTACT.name}</p>
-          <p className="text-[#3B82F6] font-medium mt-1">{CONTACT.role}</p>
-          <p className="text-[#A8A8B3] text-sm mt-1">📍 {CONTACT.location}</p>
-        </motion.div>
+            {/* Smart Actions */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35 }}
+              className="w-full"
+            >
+              <HiSmartActions />
+            </motion.div>
 
-        {/* CTA buttons */}
-        <motion.button
-          variants={item}
-          onClick={downloadVCard}
-          className="w-full flex items-center justify-center gap-3 py-4 rounded-xl bg-[#3B82F6] text-white font-semibold text-base hover:bg-[#2563EB] active:scale-[0.98] transition-all"
-        >
-          <UserPlus className="w-5 h-5" />
-          Telefon Rehberine Ekle
-        </motion.button>
+            {/* Social links */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="flex gap-6 mt-6 text-muted-foreground"
+            >
+              <a
+                href="https://linkedin.com/in/emretirabzonlu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent transition-colors text-sm"
+              >
+                LinkedIn
+              </a>
+              <span className="text-border">·</span>
+              <a
+                href="https://github.com/emretirabzonlu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent transition-colors text-sm"
+              >
+                GitHub
+              </a>
+            </motion.div>
 
-        <motion.a
-          variants={item}
-          href={CONTACT.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-3 py-4 rounded-xl border border-[#1F1F2A] bg-[#12121A] text-white font-semibold text-base hover:border-[#3B82F6]/60 active:scale-[0.98] transition-all"
-        >
-          <LinkedInIcon />
-          LinkedIn&apos;de Bağlan
-        </motion.a>
+            {/* Mini game */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              className="w-full"
+            >
+              <HiReactionGame />
+            </motion.div>
 
-        <motion.a
-          variants={item}
-          href={CONTACT.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-3 py-4 rounded-xl border border-[#1F1F2A] bg-[#12121A] text-white font-semibold text-base hover:border-[#3B82F6]/60 active:scale-[0.98] transition-all"
-        >
-          <GitHubIcon />
-          GitHub&apos;da Takip Et
-        </motion.a>
+            {/* Portfolio link */}
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9 }}
+              href="/"
+              className="mt-8 text-xs text-muted-foreground hover:text-accent transition-colors flex items-center gap-1"
+            >
+              <ChevronDown size={14} />
+              Tüm portfolyomu gör
+            </motion.a>
 
-        {/* Portfolio link */}
-        <motion.a
-          variants={item}
-          href="/"
-          className="flex items-center justify-center gap-1.5 text-sm text-[#A8A8B3] hover:text-[#3B82F6] transition-colors py-2"
-        >
-          <ExternalLink className="w-3.5 h-3.5" />
-          Tüm portfolyomu gör
-        </motion.a>
-
-        {/* Footer */}
-        <motion.p
-          variants={item}
-          className="text-center text-xs text-[#A8A8B3]/50 pb-2"
-        >
-          © 2026 Emre Tırabzonlu
-        </motion.p>
-      </motion.div>
-    </div>
+            <div className="mt-12 text-xs text-muted-foreground/50">
+              © 2026 Emre Tırabzonlu
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </main>
   );
 }

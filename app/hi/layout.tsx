@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Merhaba! | Emre Tırabzonlu",
@@ -6,5 +7,10 @@ export const metadata: Metadata = {
 };
 
 export default function HiLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <Toaster position="top-center" theme="dark" />
+    </>
+  );
 }

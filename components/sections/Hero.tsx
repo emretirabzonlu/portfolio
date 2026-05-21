@@ -6,6 +6,8 @@ import { heroData } from "@/lib/data";
 import { useReducedMotion } from "@/lib/hooks/useReducedMotion";
 import HeroSceneFallback from "@/components/three/HeroSceneFallback";
 import LazyHeroScene from "@/components/three/LazyHeroScene";
+import CurrentStatus from "@/components/ui/CurrentStatus";
+import TechTicker from "@/components/ui/TechTicker";
 
 // ─── Inline brand icons (lucide-react has no brand icons) ─────────────────────
 
@@ -66,7 +68,7 @@ export default function Hero() {
   const Scene = prefersReduced ? HeroSceneFallback : LazyHeroScene;
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
+    <section id="hero" className="relative min-h-svh flex items-center overflow-hidden">
 
       {/* ── Mobile: 3D as absolute background ── */}
       <div
@@ -176,6 +178,11 @@ export default function Hero() {
               </a>
             </motion.div>
 
+            {/* Current status */}
+            <motion.div variants={prefersReduced ? instantVariants : fadeUp}>
+              <CurrentStatus />
+            </motion.div>
+
             {/* Social links */}
             <motion.div
               variants={prefersReduced ? instantVariants : fadeUp}
@@ -208,6 +215,11 @@ export default function Hero() {
           </div>
 
         </div>
+      </div>
+
+      {/* ── Tech ticker ── */}
+      <div className="absolute bottom-20 left-0 right-0">
+        <TechTicker />
       </div>
 
       {/* ── Scroll hint ── */}

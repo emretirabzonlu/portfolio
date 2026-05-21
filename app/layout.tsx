@@ -7,6 +7,7 @@ import LenisProvider from "@/components/providers/LenisProvider";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import GradientMesh from "@/components/ui/GradientMesh";
 import EasterEggs from "@/components/ui/EasterEggs";
+import ScrollProgress from "@/components/ui/ScrollProgress";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -74,6 +75,9 @@ export default function RootLayout({
       className={`${inter.variable} ${geistMono.variable} dark`}
     >
       <body className="bg-background text-foreground antialiased min-h-screen relative">
+        {/* Scroll progress indicator — top of page */}
+        <ScrollProgress />
+
         {/* Ambient gradient mesh — behind all content */}
         <GradientMesh />
 

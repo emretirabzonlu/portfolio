@@ -317,6 +317,11 @@ export const experienceData: ExperienceData = {
   ],
 };
 
+// ─── Project helpers ──────────────────────────────────────────────────────────
+
+export const featuredProjects = projectsData.items.slice(0, 3);
+export const otherProjects = projectsData.items.slice(3);
+
 // ─── Contact ──────────────────────────────────────────────────────────────────
 
 export const contactData: ContactData = {

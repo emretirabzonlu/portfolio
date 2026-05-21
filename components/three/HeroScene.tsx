@@ -2,6 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import ParticleSphere from "./ParticleSphere";
+import FloatingCodeSymbols from "./FloatingCodeSymbols";
 
 export default function HeroScene() {
   return (
@@ -14,6 +15,7 @@ export default function HeroScene() {
     >
       <ambientLight intensity={0.5} />
       <ParticleSphere />
+      <FloatingCodeSymbols />
     </Canvas>
   );
 }
